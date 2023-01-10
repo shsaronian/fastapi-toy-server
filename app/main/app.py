@@ -9,6 +9,7 @@ from .helper.logger.logger import Logger
 server_name = "FastAPI Toy Server"
 config_env_name = "FAST_API_TOY_SERVER_ENV"
 fast_api_env = "FAST_API_ENV"
+port_number = "PORT_NUMBER"
 
 
 def init_config():
@@ -28,6 +29,14 @@ def init_logger():
     else:
         __logger.warning(f"Config file not found!, loading base configs from : {Config.CONFIG_READ_ONLY_FILE_PATH}")
     __logger.info(f"Starting {server_name}")
+
+
+def init_port_number():
+    port_num = os.getenv(port_number)
+    if port_num is None or port_num == "":
+        return 8080
+    else:
+        return int(port_num)
 
 
 def is_debug():
