@@ -1,16 +1,16 @@
 import logging
 import logging.handlers
-import os
+
 
 from app.main.helper.logger.request_formatter import RequestFormatter
-from app.main.helper.logger.timed_and_size_rotating_file_handler import TimedAndSizeRotatingFileHandler
 
 
 class Logger:
     GENERAL = 'GENERAL'
 
     __general_formatter = '[%(levelname)s] [%(asctime)s] [process_pid:%(process)d] %(message)s'
-    __formatter = '[%(levelname)s] [%(asctime)s] [process_pid:%(process)d] [thread:%(thread)d] [request_id:%(request_id)s] [%(name)s]\n\t%(message)s'
+    __without_request_id_formatter = '[%(levelname)s] [%(asctime)s] [thread:%(thread)d] [%(name)s] %(message)s'
+    __formatter = '[%(levelname)s] [%(asctime)s] [thread:%(thread)d] [request_id:%(request_id)s] [%(name)s]\n\t%(message)s'
 
     __name_to_level = {
         'DEBUG': logging.DEBUG,
@@ -24,7 +24,7 @@ class Logger:
     __is_initialized: bool = False
 
     @staticmethod
-    def initialize(level: str, file_path: str, max_file_size: int, log_to_console: bool, log_to_file: bool):
+    def initialize(level: str, log_to_console: bool):
         Logger.__is_initialized = True
         # Disable other module's loggers
         logging.getLogger('asyncio').setLevel(50)
@@ -32,21 +32,15 @@ class Logger:
         logging.getLogger('uvicorn.access').disabled = True
         logger_format = RequestFormatter(formatter=Logger.__formatter,
                                          general_formatter=Logger.__general_formatter,
-                                         general_name=Logger.GENERAL)
+                                         general_name=[Logger.GENERAL],
+                                         without_request_id_formatter=Logger.__without_request_id_formatter,
+                                         without_request_id_name=[
+                                             'httpx._client'])
         handlers = []
         if log_to_console:
             stream_handler = logging.StreamHandler()
             stream_handler.setFormatter(logger_format)
             handlers.append(stream_handler)
-        if log_to_file:
-            os.makedirs(file_path, exist_ok=True)
-            filename = os.path.join(file_path, 'log-' + str(os.getpid()) + '.log')
-            timed_and_size_rotating_file_handler = TimedAndSizeRotatingFileHandler(filename=filename,
-                                                                                   maxBytes=max_file_size * 1024 * 1024,
-                                                                                   backupCount=0,
-                                                                                   when='midnight')
-            timed_and_size_rotating_file_handler.setFormatter(logger_format)
-            handlers.append(timed_and_size_rotating_file_handler)
 
         logging.basicConfig(level=Logger.__check_level(level), handlers=handlers)
 

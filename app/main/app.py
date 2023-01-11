@@ -18,10 +18,7 @@ def init_config():
 
 def init_logger():
     Logger.initialize(Config.get('Logger.level'),
-                      Config.get('Logger.path'),
-                      Config.get('Logger.maxFileSize'),
-                      Config.get('Logger.logToConsole'),
-                      Config.get('Logger.logToFile'))
+                      Config.get('Logger.logToConsole'))
     __logger: Logger = Logger.get_logger(Logger.GENERAL)
     __logger.info("Logger initialized")
     if os.path.exists(os.path.join(os.environ[config_env_name], Config.CONFIG_FILE_NAME)):
