@@ -49,6 +49,10 @@ def is_debug():
 
 
 def create_app() -> FastAPI:
+    from .routers.before_app_request import BeforeAppRequest
+    from .routers import api_router
     app = FastAPI(title=server_name, version=__version__, debug=is_debug())
-    Logger.get_logger(Logger.GENERAL).info(f"Server started successfully")
+    app.add_middleware(BeforeAppRequest)
+    app.include_router(api_router)
+    Logger.get_logger(Logger.GENERAL).info(f"Server started successfully. Listening on port {init_port_number()}")
     return app
