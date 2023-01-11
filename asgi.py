@@ -6,4 +6,4 @@ if __name__ == '__main__':
     init_config()
     init_logger()
     app = create_app()
-    uvicorn.run(app, port=init_port_number())
+    uvicorn.run(app, host="0.0.0.0", port=init_port_number())
