@@ -1,0 +1,10 @@
+#Ignore everything
+**
+
+#Except
+!README.md
+!Dockerfile
+!requirements.txt
+!/app
+!asgi.py
+!pip.conf
