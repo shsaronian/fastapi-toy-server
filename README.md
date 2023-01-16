@@ -55,6 +55,19 @@ This is a toy FastAPI server, demonstrating basic functionalities of it.  It's a
 		    <pre><code>python asgi.py</code></pre>
 		</li>
 	</ul>
+<h2> Running with Docker </h2>
+	<ul>
+        To install and run the app locally with docker, follow these steps:
+            <li> First, build the docker image from dockerfile: 
+                    <pre><code>docker build -t imagetag .</code></pre>
+            </li>
+            <li> Then, create a container from the image and run it:
+                   <pre><code>docker run -d --name mycontainer -p 8080:8080 myimage</code></pre>
+            </li>
+		<li>Ulternatively, you can just run the following command to automate the process:
+		    <pre><code>docker-compose up</code></pre>
+		</li>
+	</ul>
 <h2> Documentation </h2>
     Navigate to the following links to browse the server documentation:
         <ul>
