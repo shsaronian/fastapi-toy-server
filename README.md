@@ -78,3 +78,23 @@ This is a toy FastAPI server, demonstrating basic functionalities of it.  It's a
                    <pre>http://localhost:8080/docs</pre>
             </li>					
         </ul>
+<h2> Testing </h2>
+	<ul>
+		<li>
+			To test the Server just run the following commands:
+            <ul>
+                <li> For unit tests:
+                       <pre><code>pytest -m unit</code></pre>
+                </li>
+                <li> For end to end tests:
+                       <pre><code>pytest -m endtoend</code></pre>
+                </li>
+                <li> To check code coverage just add the below line at the end of above commands:
+                       <pre><code>--cov=app\main</code></pre>
+                </li>
+            </ul>	
+		</li>
+	</ul>
+	Note: In order to use python in virtualenv please run the following command: 
+	<pre><code>python -m pytest</code></pre>
+
