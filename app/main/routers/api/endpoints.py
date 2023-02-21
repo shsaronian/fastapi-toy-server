@@ -24,7 +24,7 @@ async def hello(name: Union[None, str] = Query(default=None, description="Return
             response_class=PlainTextResponse,
             description="This endpoint returns the author of this server.")
 async def author():
-    response = "SharonSaronian"
+    response = "Sharon Saronian"
     status_code = 200
     logger.info(f"Response: {response} sent to client with status code {status_code}")
     return response
