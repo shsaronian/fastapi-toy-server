@@ -1,6 +1,7 @@
-FROM novinrepo:8082/docker/python:3.7
+#FROM novinrepo:8082/docker/python:3.7
+FROM python:3.7-slim
 
-COPY docs/pip.ini /root/.pip/pip.conf
+#COPY docs/pip.ini /root/.pip/pip.conf
 
 WORKDIR /install
 

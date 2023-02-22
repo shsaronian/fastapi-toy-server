@@ -4,7 +4,11 @@
 #Except
 !README.md
 !Dockerfile
+!docker-compose.yml
 !requirements.txt
+!pytest.ini
 !/app
 !asgi.py
 !/docs
+!external-resources
+
