@@ -32,8 +32,9 @@ async def author():
 @router.get('/health',
             summary='Health Endpoint',
             response_class=PlainTextResponse,
-            description="This is a simple healthcheck endpoint for the server.")
+            description="This is a simple health endpoint for the server.")
 async def health():
-    return PlainTextResponse(content="", status_code=200)
-
-
+    response = "Ok"
+    status_code = 200
+    logger.info(f"Response: {response} sent to client with status code {status_code}")
+    return response
