@@ -11,4 +11,6 @@
 !asgi.py
 !/docs
 !external-resources
+!manifest
+
 

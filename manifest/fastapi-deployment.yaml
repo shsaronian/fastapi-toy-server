@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-server-app-deployment
+  namespace: ml
+spec:
+  replicas: 3
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: fastapi-server-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: fastapi-server-app
+    spec:
+      containers:
+      - name: fastapi
+        image: shsaronian/docker_challenges:fastapi-server
+        ports:
+        - containerPort: 8080

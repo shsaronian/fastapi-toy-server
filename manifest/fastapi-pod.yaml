@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fastapi-server-app
+  namespace: ml
+  labels:
+    app: fastapi-server-app
+    version: v1
+spec:
+  containers:
+    - name: fastapi
+      image: shsaronian/docker_challenges:fastapi-server
+      imagePullPolicy: Always
+      ports:
+        - name: fastapi
+          containerPort: 8080
+          protocol: TCP
+      livenessProbe:
+        httpGet:
+          scheme: HTTP
+          path: /api/endpoints/health
+          port: fastapi
+        initialDelaySeconds: 15
+        periodSeconds: 20
+      readinessProbe:
+        httpGet:
+          scheme: HTTP
+          path: /api/endpoints/health
+          port: fastapi
+        initialDelaySeconds: 15
+        periodSeconds: 20
+      lifecycle:
+        preStop:
+          exec:
+            command: ["sleep", "15"]
+  terminationGracePeriodSeconds: 30
